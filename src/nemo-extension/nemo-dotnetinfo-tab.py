@@ -53,6 +53,8 @@ class DotnetPropertyPage(GObject.GObject, Nemo.PropertyPageProvider, Nemo.NameAn
         file.add_string_attribute('productversion', '')
         file.add_string_attribute('language', '')
         file.add_string_attribute('copyright', '')
+        file.add_string_attribute('company', '')
+        file.add_string_attribute('comments', '')
 
         dictionary={}
         out = check_output(["exiftool", filename]).decode()
@@ -70,14 +72,17 @@ class DotnetPropertyPage(GObject.GObject, Nemo.PropertyPageProvider, Nemo.NameAn
         file.add_string_attribute('productversion', dictionary.get('Product Version',''))
         file.add_string_attribute('language', dictionary.get('Language Code',''))
         file.add_string_attribute('copyright', dictionary.get('Legal Copyright',''))
-        
-       
+        file.add_string_attribute('company', dictionary.get('Company Name',''))
+        file.add_string_attribute('comments', dictionary.get('Comments',''))
+               
         self.builder.get_object("filedesc_text").set_label(file.get_string_attribute('filedesc'))
         self.builder.get_object("filever_text").set_label(file.get_string_attribute('filever'))
         self.builder.get_object("productname_text").set_label(file.get_string_attribute('productname'))
         self.builder.get_object("productversion_text").set_label(file.get_string_attribute('productversion'))
         self.builder.get_object("language_text").set_label(file.get_string_attribute('language'))
         self.builder.get_object("copyright_text").set_label(file.get_string_attribute('copyright'))
+        self.builder.get_object("company_text").set_label(file.get_string_attribute('company'))
+        self.builder.get_object("comments_text").set_label(file.get_string_attribute('comments'))
 
         return [
             Nemo.PropertyPage(name="NemoPython::NET",
